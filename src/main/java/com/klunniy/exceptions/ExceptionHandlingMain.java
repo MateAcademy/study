@@ -11,20 +11,26 @@ public class ExceptionHandlingMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean continueLoop = true;
-
+        PrintWriter printWriter = null;
         do {
             try {
-                System.out.println("Please enter numerator");
-                int numerator = scanner.nextInt();
+//                System.out.println("Please enter numerator (17)");
+//                int numerator = scanner.nextInt();
+//
+//                System.out.println("Please enter denominator (20)");
+//                int denominator = scanner.nextInt();
+//
+//                int rez = divide(numerator, denominator);
 
-                System.out.println("Please enter denominator");
-                int denominator = scanner.nextInt();
+                if (continueLoop) {
+                    System.out.println("throw runtime exception - (26)");
+                    throw new RuntimeException("runtime exception");
+                }
 
-                System.out.println(divide(numerator, denominator));
-                saveToFile(divide(numerator, denominator));
+                printWriter = new PrintWriter(new FileWriter("out.txt"));
+                printWriter.println("Result = " + 5);
 
                 continueLoop = false;
-
             } catch (ArithmeticException | InputMismatchException e) {
                 System.out.println("Exception: " + e);
                 scanner.nextLine(); // clear invalid input
@@ -32,6 +38,11 @@ public class ExceptionHandlingMain {
             } catch (IOException e) {
                 System.out.println("Unable to open file");
                 e.printStackTrace();
+            } catch (RuntimeException ex) {
+                //System.out.println("catch  RuntimeException - (42)");
+            } finally {
+                //System.out.println("Finally block closed printWriter - (44)");
+                printWriter.close();
             }
 
             System.out.println("Try catch block finished");
@@ -43,8 +54,6 @@ public class ExceptionHandlingMain {
     }
 
     private static void saveToFile(int res) throws IOException {
-        PrintWriter writer = new PrintWriter(new FileWriter("out.txt"));
-        writer.println("Result = " + res);
-        writer.close();
+
     }
 }
